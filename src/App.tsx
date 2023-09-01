@@ -1,5 +1,5 @@
 import {Image} from './components/Image'
-// hello
+// hey
 function App() {
   return <Image />
 }
