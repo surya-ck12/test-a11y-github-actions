@@ -1,0 +1,31 @@
+name: test-a11y
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pa11y:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Run axe
+        run: |
+          npm install -g @axe-core/cli
+          axe https://www.ck12.org/schools/california/
+      - name: Run pa11y
+        run: |
+          npm install -g pa11y
+          pa11y https://www.ck12.org/schools/california/
